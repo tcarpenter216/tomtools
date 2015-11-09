@@ -16,7 +16,7 @@ r.comp <- function(x1, y1, x2, y2) {
   rprime2 <-  0.5 * (log(1+r2) - log(1-r2)) 
   z <- (rprime1 - rprime2) / sqrt((1/(n1+3))+(1/(n2+3)))
   p <- 1-pnorm(abs(z))
-  return(list(z=z, p=p))
+  return(list(z=z, p=p, r1=r1, n1=n1, r2=r2, n2=n2))
 }
 
 
