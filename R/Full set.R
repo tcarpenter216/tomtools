@@ -10,10 +10,10 @@ r.cont <- function(r1, r2, n1, n2) {
 r.comp <- function(x1, y1, x2, y2) {
   r1 <- corr.test(data.frame(x1, y1))$r[2,1]
   n1 <- corr.test(data.frame(x1, y1))$n[2,1]
-  r1 <- corr.test(data.frame(x2, y2))$r[2,1]
-  n1 <- corr.test(data.frame(x2, y2))$n[2,1]
-  rprime1 <-  0.5 * (log(1+r1) - log(1-r1))
-  rprime2 <-  0.5 * (log(1+r2) - log(1-r2))
+  r2 <- corr.test(data.frame(x2, y2))$r[2,1]
+  n2 <- corr.test(data.frame(x2, y2))$n[2,1]
+  rprime1 <-  0.5 * (log(1+r1) - log(1-r1)) 
+  rprime2 <-  0.5 * (log(1+r2) - log(1-r2)) 
   z <- (rprime1 - rprime2) / sqrt((1/(n1+3))+(1/(n2+3)))
   p <- 1-pnorm(abs(z))
   return(list(z=z, p=p))
