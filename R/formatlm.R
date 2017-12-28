@@ -61,3 +61,40 @@ format.lm <- function(input, endsummary=T){
   }
   return(output)
 }
+
+
+
+format.nb <- function(input, endsummary=T){
+
+  input.b <- input %>% coef()
+  input.p <- summary(input)$coefficients[,4]
+  input.se <- summary(input)$coefficients[,2]
+  temp2 <- input.p
+  temp2[input.p>=.10] <- ""
+  temp2[input.p<.10] <- "+"
+  temp2[input.p<.05] <- "*"
+  temp2[input.p<.01] <- "**"
+  temp2[input.p<.001] <- "***"
+  input.pcode <-temp2
+
+
+  bs <- input.b %>% round(.,2)
+  bs[substr(bs,1,1)!="-"] <- paste(" ",bs[substr(bs,1,1)!="-"], sep="")
+
+  ses <- input.se %>% round(., 2)
+  ses.txt <- as.character(ses)
+  ses.txt[nchar(ses.txt)==1] <- paste(ses.txt[nchar(ses.txt)==1],".00", sep="")
+  ses.txt[nchar(ses.txt)==3] <- paste(ses.txt[nchar(ses.txt)==3],"0", sep="")
+  ses.txt <- paste("(", ses.txt, ")", sep="")
+
+
+
+  output <- paste(bs, " ",ses.txt, input.pcode, sep="")
+  output <- t(t(output))
+  rownames(output) <- rownames(coef(summary(input)))
+  if(endsummary==T){
+    paste("PR2 = ")
+
+  }
+  return(output)
+}
