@@ -63,7 +63,6 @@ format.lm <- function(input, endsummary=T){
 }
 
 
-
 format.nb <- function(input, endsummary=T){
 
   input.b <- input %>% coef()
@@ -78,8 +77,10 @@ format.nb <- function(input, endsummary=T){
   input.pcode <-temp2
 
 
-  bs <- input.b %>% round(.,2)
-  bs[substr(bs,1,1)!="-"] <- paste(" ",bs[substr(bs,1,1)!="-"], sep="")
+  bs.txt <- input.b %>% round(.,2) %>% as.character()
+  bs.txt[substr(bs.txt,1,1)!="-"] <- paste(" ",bs.txt[substr(bs.txt,1,1)!="-"], sep="")
+  bs.txt[nchar(bs.txt)==2] <- paste(bs.txt[nchar(bs.txt)==2],".00", sep="")
+  bs.txt[nchar(bs.txt)==4] <- paste(bs.txt[nchar(bs.txt)==4],"0", sep="")
 
   ses <- input.se %>% round(., 2)
   ses.txt <- as.character(ses)
@@ -89,12 +90,18 @@ format.nb <- function(input, endsummary=T){
 
 
 
-  output <- paste(bs, " ",ses.txt, input.pcode, sep="")
+  output <- paste(bs.txt, " ",ses.txt, input.pcode, sep="")
   output <- t(t(output))
   rownames(output) <- rownames(coef(summary(input)))
   if(endsummary==T){
-    paste("PR2 = ")
-
+    pr2 <- modEvA::RsqGLM(input)[1]
+    pr2 <- as.character(round(as.numeric(pr2), 2))
+    pr2[nchar(pr2)==1] <- paste(pr2[nchar(pr2)==1],".00", sep="")
+    pr2[nchar(pr2)==3] <- paste(pr2[nchar(pr2)==3],"0", sep="")
+    pr2.txt <- paste("CS-PR2 = ",pr2, sep="")
+    output <- rbind(output, pr2.txt)
+    rownames(output)[nrow(output)] <- ""
   }
   return(output)
 }
+
