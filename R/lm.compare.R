@@ -1,6 +1,5 @@
-
 lm.compare <- function(formulas, data){
-  
+
   #local function 1: comparison
   format.modch <- function(input){
     Fch <- list()
@@ -8,7 +7,7 @@ lm.compare <- function(formulas, data){
     dfch2 <- list()
     pch <- list()
     R2ch <- list()
-    
+
     for(j in 2:length(input)){
       temp<-anova(input[[j-1]], input[[j]])
       Fch[[j]]<-temp$F[2]
@@ -30,21 +29,21 @@ lm.compare <- function(formulas, data){
     R2ch <- lapply(R2ch, function(x) as.character(round(x, 3)))
     R2fin <- paste("= ",as.character(R2ch), sep="")
     R2fin[R2ch<.001] <- "< .001"
-    
+
     final <- rbind(paste("R2ch ",R2fin, sep=""),
                    paste("F(",as.character(dfch1), ",", as.character(dfch2),") = ",Fch, sep=""),
                    paste("p ",as.character(pfin), sep=""))
     return(final)
   }
-  
+
   #local function 2: table of betas
   format.betatab <- function(input){
     addna <- function(input, max){
       return(c(input, rep(NA, max-length(input))))
     }
-    
+
     input.beta <- lapply(input, function(x) coef.lm.beta(lm.beta(x)) )
-    input.p <- lapply(input, 
+    input.p <- lapply(input,
                       function(x) {
                         temp<-summary(x)$coefficients[,4]
                         maxrows <- length(coef(input[[length(input)]]))
@@ -56,9 +55,9 @@ lm.compare <- function(formulas, data){
                         temp2[temp<.001] <- "***"
                         return(temp2)
                       })
-    
+
     input2 <- list(input.beta, input.p)
-    
+
     final <- list()
     for(i in 1:length(input)){
       betas <- as.character(round(input.beta[[i]],2))
@@ -73,17 +72,17 @@ lm.compare <- function(formulas, data){
     maxrows <- length(coef(input[[length(input)]]))
     final <- lapply(final, function(x){addna(x, maxrows)})
   }
-  
+
   num.models <- length(formulas)
-  
+
   #run model on last formula
   temp <- lm(formulas[[num.models]], data=data, na.action="na.exclude")
-  skipped <- is.na(residuals(temp)) 
+  skipped <- is.na(residuals(temp))
   rm(temp)
   dat.complete <- dat[!skipped,]
   models <- lapply(formulas, lm, data=dat.complete)
-  
-  
+
+
   table.info <- format.betatab(models)
   tab1 <- as.matrix(table.info[[1]])
   for(j in 2:num.models){

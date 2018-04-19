@@ -1,10 +1,4 @@
-library(phia)
-dat <- Boik
-
-table(dat$therapy)
-table(dat$medication)
-
-cellmeans.crp <- function(y, a, b, name.a="A", name.b="B"){
+cellmeans.crf.pq <- function(y, a, b){
 
 
   p <- length(levels(a))
@@ -105,9 +99,10 @@ cellmeans.crp <- function(y, a, b, name.a="A", name.b="B"){
   tab2 <- aggregate(y, list(a, b), mean, na.rm=T)
   tab2 <- cbind(tab2, aggregate(y, list(a, b), sd, na.rm=T)[3])
   tab2[,3:4] <- round(tab2[,3:4], 3)
-  colnames(tab2) <- c(name.a, name.b, "M", "SD")
+  colnames(tab2) <- c("A", "B", "M", "SD")
 
-  return(list(anova=tab, descs=tab2, H.a = H.a, A1=A1, C.a=C.a, H.b=H.b, B1=B1, H.b=H.b, C.ab=C.ab))
+  return(list(anova=tab, descs=tab2, H.a = H.a, A1=A1, C.a=C.a, H.b=H.b, B1=B1, H.b=H.b, C.ab=C.ab, design=x))
 }
 
-cellmeans.crp(dat$edr, dat$therapy, dat$medication)
+library(phia)
+cellmeans.crf.pq(y=Boik$edr, a=Boik$therapy, b=Boik$medication)
