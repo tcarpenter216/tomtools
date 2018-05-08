@@ -92,5 +92,5 @@ lm.compare <- function(formulas, data){
   tab1 <- tab1[-1,] #drop intercept
   rownames(tab1) <- colnames(models[[num.models]]$model)[-1] #grab var names, less the DV, assign to rownames
   tab1 <- rbind(tab1, format.modch(models))
-  return(list(table=tab1, models=models))
+  return(list(table=tab1, models=models, skipped=skipped))
 }
