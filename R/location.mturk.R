@@ -20,7 +20,7 @@ location.mturk <- function(State){
   geo[region==1 | region==2] <- 1
   geo[region==3 | region==4 | region==5] <- 2
   geo[region==6 | region==7] <- 3
-  geo[region==8 | region==8] <- 4
+  geo[region==8 | region==9] <- 4
 
 
   region <- factor(region)
