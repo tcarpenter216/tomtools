@@ -104,5 +104,5 @@ cellmeans.crf.pq <- function(y, a, b){
   return(list(anova=tab, descs=tab2, H.a = H.a, A1=A1, C.a=C.a, H.b=H.b, B1=B1, H.b=H.b, C.ab=C.ab, design=x))
 }
 
-library(phia)
-cellmeans.crf.pq(y=Boik$edr, a=Boik$therapy, b=Boik$medication)
+#library(phia)
+#cellmeans.crf.pq(y=Boik$edr, a=Boik$therapy, b=Boik$medication)

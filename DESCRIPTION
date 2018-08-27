@@ -1,9 +1,14 @@
 Package: TomTools
 Type: Package
 Title: Basic Tools for Tom's R Research
-Version: 3.1
-Date: 2015-08-25
+Version: 3.2
+Date: 2018-08-27
 Author: Tom Carpenter
 Maintainer: Tom Carpenter <tcarpenter@spu.edu>
-Description: Basic tools tom uses in his research
+Description: Code used by Tom Carpenter for reserach and manuscripts
 License: GPL-2
+Imports:
+    tidyverse,
+    cocor,
+    stringr
+    
