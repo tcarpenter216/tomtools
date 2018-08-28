@@ -1,10 +1,6 @@
 #### CORRELATION MATRIX FORMATTING
 format.rmatrix <- function(input, excel.friendly=TRUE) {
 
-
-  input <- data.frame(dat$Ath_Contac_1, dat$Spirit) %>% psych::corr.test()
-  excel.friendly=FALSE
-
   library('stringr')
   char <- as.numeric(input$r)
   char <- round(char, 2)
