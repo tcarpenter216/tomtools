@@ -27,7 +27,7 @@ fit.print <- function(x){
   }
 
   out <- paste("X2(",sums$ChiSqM_DF,") = ",round.twodecimal(sums$ChiSqM_Value), ", p ", pval.round(sums$ChiSqBaseline_PValue), ", CFI = ",
-               round.twodecimal(sums$CFI), ", TLI = ", round.twodecimal(sums$TLI), ", RMSEA = ", round.twodecimal(sums$RMSEA_Estimate, 2),
+               round.twodecimal(sums$CFI), ", TLI = ", round.twodecimal(sums$TLI), ", RMSEA = ", round.twodecimal(sums$RMSEA_Estimate),
                ", SRMR = ", round.twodecimal(sums$SRMR), sep="")
 
   return(out)
