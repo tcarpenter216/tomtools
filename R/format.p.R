@@ -1,16 +1,8 @@
-format.p <- function(x){
-  require(tidyverse)
-  x.char <- as.character(x)
+format.p <- function(p){
 
-  x.char[x < .001] <- "< .001"
-  x.char
+    if (p < .001) {p <- "< .001"}
+    if (p >= .001 & p < .005) {p <- paste0("= ",substr(format(round(p, 3), nsmall=3), 2, 5))}
+    if (p >= .005) {p <- paste0("= ",substr(format(round(p, 2), nsmall=2), 2, 4))}
+    return(p)
 
-  threedec <- x < .005 & x >= .001
-  x.char[threedec] <- x[threedec] %>% round(., 3) %>% as.character() %>% substr(., 2, nchar(.))
-
-  twodec <- x > .005
-
-  x.char[twodec] <- x[twodec] %>% round(., 2) %>% as.character() %>% substr(., 2, nchar(.))
-
-  return(x.char)
 }
